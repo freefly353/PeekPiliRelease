@@ -24,7 +24,18 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
-      
+      - name: 安装依赖
+        run: |
+          cd nodejs
+          npm install
+          cd ../open
+          npm install
+          cd ../
+      - name: 编译构建
+        run: |
+          cd nodejs
+          npm run dev
+          npm run build
       - name: 设置版本号
         id: version
         run: |
