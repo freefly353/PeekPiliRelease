@@ -37,7 +37,7 @@ jobs:
           ## npm run dev
           npm run build
           cd ../
-          ls -l
+          git status
       - name: 设置版本号
         id: version
         run: |
