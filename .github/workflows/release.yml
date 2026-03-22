@@ -36,7 +36,7 @@ jobs:
           cd nodejs
           ## npm run dev
           npm run build
-          cd dist
+          cd ../
           ls -l
       - name: 设置版本号
         id: version
