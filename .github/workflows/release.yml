@@ -34,7 +34,7 @@ jobs:
       - name: 编译构建
         run: |
           cd nodejs
-          npm run dev
+          ## npm run dev
           npm run build
       - name: 设置版本号
         id: version
