@@ -1,23 +1,22 @@
-name: 自动发布 Release
+name: Windows版本 Release
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: '版本号 (例如: v1.0.0)'
+        description: '版本号 (例如: Win_v1.0.0)'
         required: true
-        default: 'v1.0.0'
+        default: 'Win_v1.0.0'
       release_notes:
         description: '发布说明'
         required: false
-        default: '新版本发布'
+        default: 'Windows新版本发布'
   push:
     tags:
-      - 'v*'
+      - 'w*'
 
 jobs:
   release:
-    # runs-on: ubuntu-latest
     runs-on: windows-latest
     permissions:
       contents: write
@@ -47,28 +46,17 @@ jobs:
       # add by freefly353
       - name: 程序打包
         run: |
-          npx pkg nodejs/dist/index.js --targets node16-win-x64,node16-linux-x64
-         # ls -l
-         # git status
-      - name: 设置版本号
-        id: version
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            VERSION="${{ github.event.inputs.version }}"
-          else
-            VERSION=${GITHUB_REF#refs/tags/}
-          fi
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "版本号: $VERSION"
-      
+          npx pkg nodejs/dist/index.js --targets node16-win-x64
+      - name: 列出打包文件
+        run: dir nodejs/dist   
       - name: 创建 Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.version.outputs.version }}
-          release_name: Release ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: Release ${{ github.event.inputs.version }}
           body: |
             ## 🎉 新版本发布
             
