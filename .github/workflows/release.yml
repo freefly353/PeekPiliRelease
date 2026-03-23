@@ -24,6 +24,11 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
+      # add by freefly353
+      - name: 配置Win7环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
       - name: 安装依赖
         run: |
           cd nodejs
@@ -37,6 +42,12 @@ jobs:
           ## npm run dev
           npm run build
           cd ../
+      # add by freefly353
+      - name: 程序打包
+        run: |
+          npx pkg . --targets node16-win-x64,node16-win-x86,node16-linux-x64
+          ls -l
+          git status
       - name: 设置版本号
         id: version
         run: |
