@@ -41,7 +41,7 @@ jobs:
           cd nodejs
           ## npm run dev
           npm run build
-          cd ../
+         # cd ../
       # add by freefly353
       - name: 程序打包
         run: |
