@@ -48,7 +48,9 @@ jobs:
         run: |
           npx pkg nodejs/dist/index.js --targets node16-win-x64
       - name: 列出打包文件
-        run: dir nodejs/dist   
+        run: |
+          dir nodejs/dist
+          dir .
       - name: 创建 Release
         id: create_release
         uses: actions/create-release@v1
